@@ -6,7 +6,7 @@ grid = {0:[1,2,3,'y'],
         3:[13,14,15,16]}
 
 # temporary veriables for spots underneath x and y
-user_temp = 5
+temp = 5
 cpu_temp = 4
 
 # used to find the current positions of either the player or computer
@@ -32,92 +32,83 @@ while True:
     left = grid[user_key][user_value - 1]
     up = grid[user_key - 1][user_value]
     down = grid[user_key + 1][user_value]
+    move = input("Where are you moving? ")
+    if move == 'r':
+        # Find the index of the value to the right
+        right_index = find_position(grid, right)
+        right_key = right_index[0]
+        right_value = right_index[1]
+
+        # Change current position value to temp value
+        grid[user_key][user_value] = temp
+
+        # Change temp to the value the player is taking
+        temp = right
+
+        # Change the value to the right of current value to player icon
+        grid[user_key][right_value] = 'x'
+        
+        # Update the user position
+        user_position = find_position(grid, 'x')
+        user_key = user_position[0]
+        user_value = user_position[1]
+    elif move == 'l':
+        # Find the index of the value to the left
+        left_index = find_position(grid,left)
+        left_key = left_index[0]
+        left_value = left_index[1]
+
+        # Change current position value to temp value
+        grid[user_key][user_value] = temp
+
+        # Change temp to the value the player is taking
+        temp = left
+
+        # Change the value to the left of current value to player icon
+        grid[left_key][left_value] = 'x'
+
+        # Update the user position
+        user_position = find_position(grid, 'x')
+        user_key = user_position[0]
+        user_value = user_position[1]
+    elif move == 'u':
+        # Find the index of the value above
+        up_index = find_position(grid, up)
+        up_key = up_index[0]
+        up_value = up_index[1]
+
+        # Change current position value to temp value
+        grid[user_key][user_value] = temp
+
+        # Change temp to the value the player is taking
+        temp = up
+
+        # Change the value above the current value to player icon
+        grid[up_key][up_value] = 'x'
+        
+        # Update the user position
+        user_position = find_position(grid, 'x')
+        user_key = user_position[0]
+        user_value = user_position[1]
+    elif move == 'd':
+        # Find the index of the value below
+        down_index = find_position(grid, down)
+        down_key = down_index[0]
+        down_value = down_index[1]
+
+        # Change current position value to temp value
+        grid[user_key][user_value] = temp
+
+        # Change temp to the value the player is taking
+        temp = down
+
+        # Change the value to below the current value to player icon
+        grid[down_key][down_value] = 'x'
+        
+        # Update the user position
+        user_position = find_position(grid, 'x')
+        user_key = user_position[0]
+        user_value = user_position[1]
 
 
-    def _player_turn(player,temp):
-        move = input(f'{player} Where are you moving? ')
-        if move == 'r':
-            # Find the index of the value to the right
-            right_index = find_position(grid, right)
-            right_key = right_index[0]
-            right_value = right_index[1]
-
-            # Change current position value to temp value
-            grid[user_key][user_value] = temp
-
-            # Change temp to the value the player is taking
-            temp = right
-
-            # Change the value to the right of current value to player icon
-            grid[user_key][right_value] = player
-
-            # Update the user position
-            user_position = find_position(grid, player)
-            user_key = user_position[0]
-            user_value = user_position[1]
-        elif move == 'l':
-            # Find the index of the value to the left
-            left_index = find_position(grid,left)
-            left_key = left_index[0]
-            left_value = left_index[1]
-
-            # Change current position value to temp value
-            grid[user_key][user_value] = temp
-
-            # Change temp to the value the player is taking
-            temp = left
-
-            # Change the value to the left of current value to player icon
-            grid[left_key][left_value] = player
-
-            # Update the user position
-            user_position = find_position(grid, player)
-            user_key = user_position[0]
-            user_value = user_position[1]
-        elif move == 'u':
-            # Find the index of the value above
-            up_index = find_position(grid, up)
-            up_key = up_index[0]
-            up_value = up_index[1]
-
-            # Change current position value to temp value
-            grid[user_key][user_value] = temp
-
-            # Change temp to the value the player is taking
-            temp = up
-
-            # Change the value above the current value to player icon
-            grid[up_key][up_value] = player
-
-            # Update the user position
-            user_position = find_position(grid, player)
-            user_key = user_position[0]
-            user_value = user_position[1]
-        elif move == 'd':
-            # Find the index of the value below
-            down_index = find_position(grid, down)
-            down_key = down_index[0]
-            down_value = down_index[1]
-
-            # Change current position value to temp value
-            grid[user_key][user_value] = temp
-
-            # Change temp to the value the player is taking
-            temp = down
-
-            # Change the value to below the current value to player icon
-            grid[down_key][down_value] = player
-
-            # Update the user position
-            user_position = find_position(grid, player)
-            user_key = user_position[0]
-            user_value = user_position[1]
-
-    score = 0
-
-    _player_turn('x',user_temp)
-    _player_turn('y',cpu_temp)
-
-
-    
 

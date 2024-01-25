@@ -47,84 +47,51 @@ while True:
         up = grid[player_key - 1][player_value] if player_key - 1 >= 0 else None
         down = grid[player_key + 1][player_value] if player_key + 1 < len(grid) else None
 
-        # Movement input
-        move = input(f'{player} Where are you moving? ')
-        if move == 'r':
-            # Find the index of the value to the right
-            right_index = find_position(grid, right)
-            right_key = right_index[0]
-            right_value = right_index[1]
-
-            # Change current position value to temp value
-            grid[player_key][player_value] = temp
-
-            # Change temp to the value the player is taking
-            temp = right
-
-            # Change the value to the right of current value to player icon
-            grid[right_key][right_value] = player
-
-            # Update the user position
-            player_position = find_position(grid, player)
+        def _dmove(direction, player, temp):
+            '''
+            Function for movement in each direction.
+            
+            Parameters:
+                -direction(str): what direction to go in.
+                -player(str): which player to move
+                -temp(str): which temporary variable to use
+                
+            Returns:
+                +New grid with moved icons
+            '''
+            # Find position of current player
+            player_position = find_position(grid,player)
             player_key = player_position[0]
             player_value = player_position[1]
-        elif move == 'l':
-            # Find the index of the value to the left
-            left_index = find_position(grid,left)
-            left_key = left_index[0]
-            left_value = left_index[1]
+            
+            direction_index = find_position(grid, direction)
+            direction_key = direction_index[0]
+            direction_value = direction_index[1]
 
             # Change current position value to temp value
             grid[player_key][player_value] = temp
 
             # Change temp to the value the player is taking
-            temp = left
-
-            # Change the value to the left of current value to player icon
-            grid[left_key][left_value] = player
-
-            # Update the user position
-            player_position = find_position(grid, player)
-            player_key = player_position[0]
-            player_value = player_position[1]
-        elif move == 'u':
-            # Find the index of the value above
-            up_index = find_position(grid, up)
-            up_key = up_index[0]
-            up_value = up_index[1]
-
-            # Change current position value to temp value
-            grid[player_key][player_value] = temp
-
-            # Change temp to the value the player is taking
-            temp = up
-
-            # Change the value above the current value to player icon
-            grid[up_key][up_value] = player
-
-            # Update the user position
-            player_position = find_position(grid, player)
-            player_key = player_position[0]
-            player_value = player_position[1]
-        elif move == 'd':
-            # Find the index of the value below
-            down_index = find_position(grid, down)
-            down_key = down_index[0]
-            down_value = down_index[1]
-
-            # Change current position value to temp value
-            grid[player_key][player_value] = temp
-
-            # Change temp to the value the player is taking
-            temp = down
+            temp = direction
 
             # Change the value to below the current value to player icon
-            grid[down_key][down_value] = player
+            grid[direction_key][direction_value] = player
 
             # Update the user position
             player_position = find_position(grid, player)
             player_key = player_position[0]
             player_value = player_position[1]
+
+        # Movement input
+        move = input(f'Player {player}, Where are you moving? ')
+        if move == 'r':
+            _dmove(right, player, temp)
+        elif move == 'l':
+            _dmove(left, player, temp)
+        elif move == 'u':
+            _dmove(up, player, temp)
+        elif move == 'd':
+            _dmove(down, player, temp)
 
     score = 0
 
